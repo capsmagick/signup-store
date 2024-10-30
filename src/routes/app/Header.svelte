@@ -3,6 +3,7 @@
 	import { isLoggedIn, cartItemCount } from '$lib/store/user';
 	import { type NavLink } from '$lib';
 	import { NavIcon, AppLogo, Magnify, Account, Heart, ShoppingBag } from '$lib/icons';
+	import LoginForm from '$lib/components/app/home/LoginForm.svelte';
 
 	import Icon from '@iconify/svelte';
 	// Props
@@ -55,9 +56,13 @@
 			link: '/app/menu/womens'
 		}
 	];
+	let isShowLoginForm: boolean = false;
 	// Watchers
 	$: cartCount = $cartItemCount ?? 0;
 	// Methods
+	function toggleLoginForm(){
+		isShowLoginForm = !isShowLoginForm
+	}
 	function goToPage(link: any) {
 		let val = link.link;
 		goto(link.link);
@@ -143,6 +148,9 @@
 					</div>
 				{/if}
 			</button>
+			<button type="button" on:click={() => toggleLoginForm()}>
+				<img src={NavIcon} alt="" />
+			</button>
 			<!-- <ReusableRightOpenNav title="login" width="700px">
           <template #modal-activator="{ toggleModal }">
             <button class="hidden" @click="toggleModal">
@@ -158,4 +166,7 @@
         </ReusableRightOpenNav> -->
 		</div>
 	</div>
+	{#if isShowLoginForm}
+		<LoginForm />
+	{/if}
 </header>
